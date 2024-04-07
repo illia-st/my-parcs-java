@@ -5,41 +5,30 @@ import parcs.task;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskRunner {
     public static void main(String[] args) throws Exception {
-        int num_of_threads = 5;
+        int N = 100000;
 
-        StringBuilder contentBuilder = new StringBuilder();
-
-        try (BufferedReader br = new BufferedReader(new FileReader("out/input"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                contentBuilder.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String buffer = contentBuilder.toString();
-        System.out.println(buffer.length());
-        Words words = new Words();
-        words.addWordsFromBuffer(buffer);
-        List<Words> split_words = words.split(num_of_threads);
+        int num_of_threads = 10;
 
         task curtask = new task();
-        curtask.addJarFile("PalindromeCounter.jar");
+        curtask.addJarFile("PrimeSumCounter.jar");
         AMInfo info = new AMInfo(curtask, null);
 
         point[] P = new point[num_of_threads];
         channel[] C = new channel[num_of_threads];
 
         for (int i = 0; i < num_of_threads; ++i) {
+            final int startRange = i * (N / num_of_threads) + 1;
+            final int endRange = (i == num_of_threads - 1) ? N : (i + 1) * (N / num_of_threads);
+
             P[i] = info.createPoint();
             C[i] = P[i].createChannel();
-            P[i].execute("PalindromeCounter");
-            C[i].write(split_words.get(i));
+            P[i].execute("PrimeSumCounter");
+            C[i].write(new Interval(startRange, endRange));
         }
 
         int res = 0;
