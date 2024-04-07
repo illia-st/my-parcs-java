@@ -1,11 +1,11 @@
-import parcs.*;
-
-import java.util.List;
-import java.util.Scanner;
-import java.io.File;
+import parcs.AMInfo;
+import parcs.channel;
+import parcs.point;
+import parcs.task;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public class TaskRunner {
     public static void main(String[] args) throws Exception {
@@ -29,7 +29,7 @@ public class TaskRunner {
         List<Words> split_words = words.split(num_of_threads);
 
         task curtask = new task();
-        curtask.addJarFile("WordsCounter.jar");
+        curtask.addJarFile("PalindromeCounter.jar");
         AMInfo info = new AMInfo(curtask, null);
 
         point[] P = new point[num_of_threads];
@@ -38,19 +38,18 @@ public class TaskRunner {
         for (int i = 0; i < num_of_threads; ++i) {
             P[i] = info.createPoint();
             C[i] = P[i].createChannel();
-            P[i].execute("WordsCounter");
+            P[i].execute("PalindromeCounter");
             C[i].write(split_words.get(i));
         }
 
-        UniqueWords res = new UniqueWords();
+        int res = 0;
 
         for (int i = 0; i < num_of_threads; ++i) {
-            UniqueWords uniqueWords = (UniqueWords) C[i].readObject();
-            res.union(uniqueWords);
+            res += C[i].readInt();
         }
 
         System.out.println("Result found.");
-        System.out.println(res.size());
+        System.out.println(res);
 
         curtask.end();
     }

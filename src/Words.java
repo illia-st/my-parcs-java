@@ -17,37 +17,10 @@ public class Words implements Serializable {
         this.words = new ArrayList<>(words);
     }
 
-    public void add(String word) {
-        words.add(word);
-    }
-
-    public void addAll(List<String> words) {
-        this.words.addAll(words);
-    }
-
-    public void remove(String word) {
-        words.remove(word);
-    }
-
-    public void removeAll(List<String> words) {
-        this.words.removeAll(words);
-    }
-
-    public int size() {
-        return words.size();
-    }
-
-    public boolean contains(String word) {
-        return words.contains(word);
-    }
-
     public List<String> getWords() {
         return Collections.unmodifiableList(words);
     }
 
-    public void sort() {
-        Collections.sort(words);
-    }
 
     public void addWordsFromBuffer(String buffer) {
         List<String> wordsFromBuffer = new ArrayList<>();
