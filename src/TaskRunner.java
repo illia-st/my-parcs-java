@@ -9,11 +9,11 @@ import java.util.List;
 
 public class TaskRunner {
     public static void main(String[] args) throws Exception {
-        int num_of_threads = 10;
+        int num_of_threads = 5;
 
         StringBuilder contentBuilder = new StringBuilder();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("input"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("out/input"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 contentBuilder.append(line).append("\n");
