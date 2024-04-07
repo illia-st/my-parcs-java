@@ -31,10 +31,10 @@ public class TaskRunner {
             C[i].write(new Interval(startRange, endRange));
         }
 
-        int res = 0;
+        long res = 0;
 
         for (int i = 0; i < num_of_threads; ++i) {
-            res += C[i].readInt();
+            res += C[i].readLong();
         }
 
         System.out.println("Result found.");

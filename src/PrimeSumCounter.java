@@ -18,7 +18,7 @@ public class PrimeSumCounter implements AM {
     }
     public void run(AMInfo info) {
         Interval g = (Interval)info.parent.readObject();
-        int sum = 0;
+        long sum = 0;
         for (int num = g.getStart(); num <= g.getEnd(); num++) {
             if (isPrime(num)) {
                 sum += num;
