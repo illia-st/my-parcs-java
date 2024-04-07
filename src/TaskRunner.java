@@ -3,14 +3,27 @@ import parcs.*;
 import java.util.List;
 import java.util.Scanner;
 import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class TaskRunner {
     public static void main(String[] args) throws Exception {
         int num_of_threads = 10;
 
-        Scanner sc = new Scanner(new File("input"));
-        String buffer = sc.toString();
+        StringBuilder contentBuilder = new StringBuilder();
 
+        try (BufferedReader br = new BufferedReader(new FileReader("input"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                contentBuilder.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String buffer = contentBuilder.toString();
+        System.out.println(buffer.length());
         Words words = new Words();
         words.addWordsFromBuffer(buffer);
         List<Words> split_words = words.split(num_of_threads);
